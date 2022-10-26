@@ -21,11 +21,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    //route not specific to a role
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    }
-    )->name('dashboard');
+
 
     //group for all student role specific route
     Route::prefix('student')
