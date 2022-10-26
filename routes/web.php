@@ -18,12 +18,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    //route not specific to a role
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    }
+    )->name('dashboard');
+
+    //group for all student role specific route
+    Route::prefix('student')
+        ->name('student.')
+        ->group(function () {
+            Route::get('timetable', [TimetableController::class, 'index'])
+                ->name('timetable');
+
+        }
+        );
+});
 
 
 
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/students.php';
