@@ -24,7 +24,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
     //group for all student role specific route
-    Route::prefix('student')
+    Route::middleware('role:1')
+        ->prefix('student')
         ->name('student.')
         ->group(function () {
             Route::get('timetable', [\Student\TimetableController::class, 'index'])
@@ -32,7 +33,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         }
         );
-    Route::prefix('teacher')
+    Route::middleware('role:2')
+        ->prefix('teacher')
         ->name('teacher.')
         ->group(function () {
             Route::get('timetable', [\App\Http\Controllers\Teacher\TimetableController::class, 'index'])
